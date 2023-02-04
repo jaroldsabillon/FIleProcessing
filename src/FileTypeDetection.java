@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileTypeDetection {
@@ -19,6 +20,8 @@ public class FileTypeDetection {
     private static int pdfCount = 0;
     private static int pptxCount = 0;
     private static int unknownCount = 0;
+    private static HashMap<String, Integer> fileCount = new HashMap<>();
+    private static ArrayList<>
 
     public static void updateTotalCount(){
         totalCount = totalCount+1;
@@ -60,9 +63,12 @@ public class FileTypeDetection {
     public static ArrayList<String> unknownNames = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-
+        fileCount.put("England", 0);
+        fileCount.put("England", 0);
+        fileCount.put("England", 0);
 
         System.out.println("\n\t Traversing files in directory: " + DIRECTORY + "\n");
+        //replace file detection with https://www.programiz.com/java-programming/examples/get-file-extension#:~:text=If%20you%20are%20using%20the,%22%3B%20String%20extension%20%3D%20Files.
 
         for(File f: new File(DIRECTORY).listFiles()) {//traverses all files in INPUT directory
             updateTotalCount();
