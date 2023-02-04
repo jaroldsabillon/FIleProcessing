@@ -15,45 +15,14 @@ public class FileTypeDetection {
     }
 
     //getting file counts --> convert counts to hashmaps "name / count" easier to access and less commands.
-    private static int totalCount = 0;
-    private static int docxCount = 0;
-    private static int pdfCount = 0;
-    private static int pptxCount = 0;
-    private static int unknownCount = 0;
-    private static HashMap<String, Integer> fileCount = new HashMap<>();
-    private static ArrayList<>
 
-    public static void updateTotalCount(){
-        totalCount = totalCount+1;
-    }
-    public static int getTotalCount(){
-        return totalCount;
-    }
-    public static void updateUnknownCount(){
-        unknownCount = unknownCount+1;
-    }
-    public static int getUnknownCount(){
-        return unknownCount;
-    }
+    private static HashMap<String, Integer> fileCount = new HashMap<>(){{
+        put("pptx",0);
+        put("docx", 0);
+        put("pdf", 0);
+        put("other", 0);
+    }};
 
-    public static void updateDocxCount(){
-        docxCount = docxCount+1;
-    }
-    public static int getDocxCount(){
-        return docxCount;
-    }
-    public static void updatePdfCount(){
-        pdfCount = pdfCount +1;
-    }
-    public static int getPdfCount(){
-        return pdfCount;
-    }
-    public static void updatePptxCount(){
-        pptxCount = pptxCount+1;
-    }
-    public static int getPptxCount(){
-        return pptxCount;
-    }
 
 
     //data structures to store names of files in dependent on file type
