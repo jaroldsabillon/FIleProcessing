@@ -13,6 +13,7 @@ public class FileTypeDetection {
         return DIRECTORY;
     }
 
+    //getting file counts --> convert counts to hashmaps "name / count" easier to access and less commands.
     private static int totalCount = 0;
     private static int docxCount = 0;
     private static int pdfCount = 0;
@@ -65,27 +66,34 @@ public class FileTypeDetection {
 
         for(File f: new File(DIRECTORY).listFiles()) {//traverses all files in INPUT directory
             updateTotalCount();
+
+            //Counting and adding file names to appropriate data structure
             if (f.getName().endsWith(".docx")) {
+
                 updateDocxCount();
 
                 String inputFileName = f.getName();
+                docxNames.add(inputFileName);
                 System.out.println("File name: " +inputFileName);
 
             }
             else if(f.getName().endsWith(".pdf")){
                 updatePdfCount();
                 String inputFileName = f.getName();
+                pdfNames.add(inputFileName);
                 System.out.println("File name: " +inputFileName);
 
             }
             else if(f.getName().endsWith(".pptx")){
                 updatePptxCount();
                 String inputFileName = f.getName();
+                pptxNames.add(inputFileName);
                 System.out.println("File name: " +inputFileName);
             }
             else{
                 updateUnknownCount();
                 String inputFileName = f.getName();
+                unknownNames.add(inputFileName);
                 System.out.println("File name: " +inputFileName);
             }
 
@@ -97,6 +105,15 @@ public class FileTypeDetection {
         System.out.println("Amount of unknown files: " + getUnknownCount());
         System.out.println("Total amount of files in folder: " + getTotalCount());
 
+        for(String s: docxNames){
+            System.out.println(s);
+        }
+
+        FileObj.main(new String[0], docxNames);
+
+
     }
+
+
 
 }
