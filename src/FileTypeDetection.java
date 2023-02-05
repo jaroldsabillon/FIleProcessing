@@ -23,6 +23,15 @@ public class FileTypeDetection {
         put("other", 0);
     }};
 
+    private static int totalCount = 0;
+
+    public static int updateTotalCount(){
+        return totalCount = totalCount+1;
+    }
+    public static int getTotalCount(){
+        return totalCount;
+    }
+
 
 
     //data structures to store names of files in dependent on file type
@@ -32,52 +41,35 @@ public class FileTypeDetection {
     public static ArrayList<String> unknownNames = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        fileCount.put("England", 0);
-        fileCount.put("England", 0);
-        fileCount.put("England", 0);
+        fileCount.put("pdf", 0);
+        fileCount.put("docx", 0);
+        fileCount.put("pptx", 0);
 
         System.out.println("\n\t Traversing files in directory: " + DIRECTORY + "\n");
         //replace file detection with https://www.programiz.com/java-programming/examples/get-file-extension#:~:text=If%20you%20are%20using%20the,%22%3B%20String%20extension%20%3D%20Files.
 
         for(File f: new File(DIRECTORY).listFiles()) {//traverses all files in INPUT directory
-            updateTotalCount();
 
-            //Counting and adding file names to appropriate data structure
-            if (f.getName().endsWith(".docx")) {
+            String fileName = f.toString();
 
-                updateDocxCount();
+            int index = fileName.lastIndexOf('.');
+            if(index > 0) {
+                String extension = fileName.substring(index + 1);
+                if (fileCount.get(extension) == null) {
+                    fileCount.put(extension, 0);
+                } else {
 
-                String inputFileName = f.getName();
-                docxNames.add(inputFileName);
-                System.out.println("File name: " +inputFileName);
+                    fileCount.put(extension, fileCount.get(extension) + 1);
+                    System.out.println("File name: " + fileName);
+                    System.out.println(fileName + "\t" + extension);
 
+                }
             }
-            else if(f.getName().endsWith(".pdf")){
-                updatePdfCount();
-                String inputFileName = f.getName();
-                pdfNames.add(inputFileName);
-                System.out.println("File name: " +inputFileName);
-
-            }
-            else if(f.getName().endsWith(".pptx")){
-                updatePptxCount();
-                String inputFileName = f.getName();
-                pptxNames.add(inputFileName);
-                System.out.println("File name: " +inputFileName);
-            }
-            else{
-                updateUnknownCount();
-                String inputFileName = f.getName();
-                unknownNames.add(inputFileName);
-                System.out.println("File name: " +inputFileName);
-            }
-
         }
 
-        System.out.println("\nAmount of docx files: " + getDocxCount());
-        System.out.println("Amount of pdf files: " + getPdfCount());
-        System.out.println("Amount of ppt files: " + getPptxCount());
-        System.out.println("Amount of unknown files: " + getUnknownCount());
+        System.out.println("\nAmount of docx files: " + fileCount.get("docx"));
+        System.out.println("Amount of pdf files: " + fileCount.get("pptx"));
+        System.out.println("Amount of ppt files: " + fileCount.get("pdf"));
         System.out.println("Total amount of files in folder: " + getTotalCount());
 
         for(String s: docxNames){
