@@ -28,14 +28,24 @@ public class DocxFile {
         put("grammar", "null");
     }};
 
+
+    //returns whether there is a flag in emails, links, or grammar.
+    public String getErrorFlags(String validate){
+        return this.fileValidation.get(validate);
+    }
+
+    //returns the response code for a validating a specific email
+    public Integer getEmailResponse(String email){
+
+
+        return emailsInFile.get(email);
+    }
+
     public String DocXFile(String fileName) {
         return this.fileName = fileName;
     }
 
     public void getLinks(){
-
-
-
 
     }
 

@@ -63,7 +63,7 @@ public class FileTypeDetection {
                         fileCount.put(extension, fileCount.get(extension) + 1);
 
                     }
-
+                    //storing doc names into appropriate data structures
                     if(extension.equals("docx")){
                         docxNames.add(f.getName());
                     }
@@ -78,8 +78,8 @@ public class FileTypeDetection {
                     }
                 }
             }
-            Iterator hmIterator = fileCount.entrySet().iterator();
 
+            //printing content of each array
             System.out.println(
                     "---------------------------------------------\n" +
                     "\t\tfiles in docx\n" +
@@ -115,6 +115,8 @@ public class FileTypeDetection {
         }catch(NullPointerException e){
             System.out.println("File not found: " + e);
         }
+
+
 
 
     }
