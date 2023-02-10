@@ -2,13 +2,13 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class FileTypeDetection {
-
-    public final static String DIRECTORY = "./src/FileInput/";//absolute path to input
+    public FileTypeDetection(String DIRECTORY){
+        this.DIRECTORY = DIRECTORY;
+    }
+    private static String DIRECTORY = "./src/FileInput/";//absolute path to input
 
     public String getDirectory(){
         return DIRECTORY;
@@ -16,12 +16,7 @@ public class FileTypeDetection {
 
     //getting file counts --> convert counts to hashmaps "name / count" easier to access and less commands.
 
-    private static HashMap<String, Integer> fileCount = new HashMap<>(){{
-        put("pptx",0);
-        put("docx", 0);
-        put("pdf", 0);
-        put("other", 0);
-    }};
+    private static HashMap<String, Integer> fileCount = new HashMap<>();
 
     private static int totalCount = 0;
 
@@ -35,52 +30,93 @@ public class FileTypeDetection {
 
 
     //data structures to store names of files in dependent on file type
-    public static ArrayList<String> pptxNames = new ArrayList<>();
-    public static ArrayList<String> docxNames= new ArrayList<>();
-    public static ArrayList<String> pdfNames = new ArrayList<>();
-    public static ArrayList<String> unknownNames = new ArrayList<>();
+    private static ArrayList<String> pptxNames = new ArrayList<>();
+    private static ArrayList<String> docxNames= new ArrayList<>();
+    private static ArrayList<String> pdfNames = new ArrayList<>();
+    //if data structure for a specific file type is not created and added to the file organization then it will be added here
+    private static ArrayList<String> unknownNames = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        fileCount.put("pdf", 0);
-        fileCount.put("docx", 0);
-        fileCount.put("pptx", 0);
 
         System.out.println("\n\t Traversing files in directory: " + DIRECTORY + "\n");
-        //replace file detection with https://www.programiz.com/java-programming/examples/get-file-extension#:~:text=If%20you%20are%20using%20the,%22%3B%20String%20extension%20%3D%20Files.
 
-        for(File f: new File(DIRECTORY).listFiles()) {//traverses all files in INPUT directory
+        //Begins traversing file directory
+        try {
 
-            String fileName = f.toString();
+            for (File f : new File(DIRECTORY).listFiles()) {
 
-            int index = fileName.lastIndexOf('.');
-            if(index > 0) {
-                String extension = fileName.substring(index + 1);
-                if (fileCount.get(extension) == null) {
-                    fileCount.put(extension, 0);
-                } else {
+                updateTotalCount();
+                String fileName = f.toString();
+                System.out.println("File name: " + f.getName());
 
-                    fileCount.put(extension, fileCount.get(extension) + 1);
-                    System.out.println("File name: " + fileName);
-                    System.out.println(fileName + "\t" + extension);
+                //takes extension of a file
+                int index = fileName.lastIndexOf('.');
+                if (index > 0) {
 
+                    String extension = fileName.substring(index + 1);
+
+                    if (!fileCount.containsKey(extension)) {
+                        fileCount.put(extension, 1);
+
+                    } else {
+
+                        fileCount.put(extension, fileCount.get(extension) + 1);
+
+                    }
+
+                    if(extension.equals("docx")){
+                        docxNames.add(f.getName());
+                    }
+                    else if(extension.equals("pptx")){
+                        pptxNames.add(f.getName());
+                    }
+                    else if(extension.equals("pdf")){
+                        pdfNames.add(f.getName());
+                    }
+                    else{
+                        unknownNames.add(f.getName());
+                    }
                 }
             }
+            Iterator hmIterator = fileCount.entrySet().iterator();
+
+            System.out.println(
+                    "---------------------------------------------\n" +
+                    "\t\tfiles in docx\n" +
+                    "---------------------------------------------");
+
+            for (String s : docxNames) {
+                System.out.println("|\t"+ s + "\t\t\t|\n");
+            }
+            System.out.println(
+                    "---------------------------------------------\n" +
+                            "\t\tfiles in pptx\n" +
+                            "---------------------------------------------");
+
+            for (String s : pptxNames) {
+                System.out.println("|\t"+ s + "\t\t\t|\n");
+            }
+            System.out.println(
+                    "---------------------------------------------\n" +
+                            "\t\tfiles in pdf\n" +
+                            "---------------------------------------------");
+
+            for (String s : pdfNames) {
+                System.out.println("|\t"+ s + "\t\t\t|\n");
+            }
+            System.out.println(
+                    "---------------------------------------------\n" +
+                            "\t\tOther files\n" +
+                            "---------------------------------------------");
+
+            for (String s : unknownNames) {
+                System.out.println("|\t"+ s + "\t\t\t|\n");
+            }
+        }catch(NullPointerException e){
+            System.out.println("File not found: " + e);
         }
-
-        System.out.println("\nAmount of docx files: " + fileCount.get("docx"));
-        System.out.println("Amount of pdf files: " + fileCount.get("pptx"));
-        System.out.println("Amount of ppt files: " + fileCount.get("pdf"));
-        System.out.println("Total amount of files in folder: " + getTotalCount());
-
-        for(String s: docxNames){
-            System.out.println(s);
-        }
-
-        FileObj.main(new String[0], docxNames);
 
 
     }
-
-
 
 }
