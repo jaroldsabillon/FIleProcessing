@@ -1,21 +1,49 @@
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-public class DocxFile {
+public class PdfFile {
+
+
+    private File file;
+    private PDDocument doc;
+    private PDDocumentInformation pdd;
+
+    public PdfFile(String fileName, String directory) throws IOException {
 
 
 
-    public DocxFile(String name, String Directory){
-        this.fileName = name;
-        this.Directory = Directory;
+        this.file = new File(directory+fileName);
+        this.doc = PDDocument.load(file);
+        PDDocumentInformation pdd = this.doc.getDocumentInformation();
+        this.fileName = fileName;
+        this.creationDate = (GregorianCalendar) pdd.getCreationDate();
+        this.author = pdd.getAuthor();
+        this.title = pdd.getTitle();
+        this.subject = pdd.getSubject();
+        this.creator = pdd.getCreator();
+        this.lastModificationDate = (GregorianCalendar) pdd.getModificationDate();
+
+        this.pageCount = doc.getNumberOfPages();
+        this.fileSize = file.length();
+
     }
 
-    private String Directory;
+
     private int wordCount;
+    private GregorianCalendar lastModificationDate;
+    private String creator;
+    private String subject;
+    private String title;
     private int pageCount;
     private String author;
-    private int fileSize;
-    private Date dateOfCreation;
+    private long fileSize;
+    private GregorianCalendar creationDate;
     private String fileName;
     //Stores each links response code
     private HashMap<String, Integer> linksInFile = new HashMap<String, Integer>();
@@ -27,6 +55,7 @@ public class DocxFile {
         put("grammar", "null");
     }};
 
+    //Get and set methods
     public void setWordCount(Integer count){
         this.wordCount = count;
     }
@@ -48,14 +77,11 @@ public class DocxFile {
     public void setFileSize(int size){
         this.fileSize = size;
     }
-    public int getFileSize(){
+    public long getFileSize(){
         return this.fileSize;
     }
-    public void setDateOfCreation(Date date){
-        this.dateOfCreation = date;
-    }
-    public Date getDateOfCreation(){
-        return this.dateOfCreation;
+    public GregorianCalendar getDateOfCreation(){
+        return this.creationDate;
     }
     //returns whether there is a flag in emails, links, or grammar.
     public String getErrorFlag(String validate){
@@ -86,6 +112,7 @@ public class DocxFile {
     public void OutPutJson(){
 
     }
+
 
 
 

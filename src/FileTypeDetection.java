@@ -1,3 +1,5 @@
+import jj2000.j2k.util.ArrayUtil;
+
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.File;
@@ -26,15 +28,23 @@ public class FileTypeDetection {
     public static int getTotalCount(){
         return totalCount;
     }
-
-
-
     //data structures to store names of files in dependent on file type
     private static ArrayList<String> pptxNames = new ArrayList<>();
     private static ArrayList<String> docxNames= new ArrayList<>();
     private static ArrayList<String> pdfNames = new ArrayList<>();
+
     //if data structure for a specific file type is not created and added to the file organization then it will be added here
     private static ArrayList<String> unknownNames = new ArrayList<>();
+
+    public static ArrayList<ArrayList<String>>  fileArrayOfArrays= new ArrayList<>();
+
+    public static void addArrayToArrayOfArrays(ArrayList<String> fileArray){
+        fileArrayOfArrays.add(fileArray);
+    }
+    public static ArrayList<ArrayList<String>> getfileArrayOfArrays(){
+        return fileArrayOfArrays;
+    }
+
 
     public static void main(String[] args) throws IOException {
 
@@ -116,7 +126,7 @@ public class FileTypeDetection {
             System.out.println("File not found: " + e);
         }
 
-        driver.main(docxNames);
+        driver.main(pdfNames);
 
 
 

@@ -1,17 +1,26 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class driver {
 
-
-    public static void main(ArrayList<String> docxarray){
+    //change to accept an array of arrays and create a for loop to enter each to make it.
+    public static void main(ArrayList<String> pdfArray) throws IOException {
 
         System.out.print("Running second program\n");
         FileObjectCreation createobj = new FileObjectCreation();
 
-        createobj.createDocxObjects(docxarray);
+        //createobj.createDocxObjects(docxarray);
+        createobj.createPdfObjects(pdfArray);
 
-        for(DocxFile docs: createobj.getListOfDocxObjects()){
-            System.out.println(docs.getFileName()+"\n");
+        //for(DocxFile docs: createobj.getListOfDocxObjects()){
+         //   System.out.println(docs.getFileName()+"\n");
+        //}
+
+        for(PdfFile pdf: createobj.getListOfPdfObjects()){
+
+            System.out.println("name of file: " + pdf.getFileName()+"\n");
+            System.out.println("name of file: " + pdf.getAuthor()+"\n");
+            System.out.println("name of file: " + pdf.getPageCount()+"\n");
         }
 
     }
