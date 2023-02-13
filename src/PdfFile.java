@@ -30,7 +30,7 @@ public class PdfFile {
         this.lastModificationDate = (GregorianCalendar) pdd.getModificationDate();
 
         this.pageCount = doc.getNumberOfPages();
-        this.fileSize = File.size(directory+fileName);
+        this.fileSize = file.length();
         doc.close();
 
     }
