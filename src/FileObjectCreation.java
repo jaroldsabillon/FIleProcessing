@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class FileObjectCreation {
 
-    private final String DIRECTORY = "./src/FileInput/";
+    private final String DIRECTORY = "./ED1_Demo/documents/";
     private ArrayList<DocxFile> listOfDocxObjects = new ArrayList<>();
     private ArrayList<DocxFile> listOfPptxObjects = new ArrayList<>();
     private ArrayList<PdfFile> listOfPdfObjects = new ArrayList<>();
