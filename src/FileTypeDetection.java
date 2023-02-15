@@ -1,4 +1,3 @@
-import jj2000.j2k.util.ArrayUtil;
 
 import java.io.FileFilter;
 import java.io.IOException;
@@ -10,7 +9,7 @@ public class FileTypeDetection {
     public FileTypeDetection(String DIRECTORY){
         this.DIRECTORY = DIRECTORY;
     }
-    private static String DIRECTORY = "./src/FileInput/";//absolute path to input
+    private static String DIRECTORY = "./ED1_Demo/documents/";//absolute path to input
 
     public String getDirectory(){
         return DIRECTORY;
