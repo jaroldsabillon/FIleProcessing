@@ -9,10 +9,14 @@ public class FileTypeDetection {
     public FileTypeDetection(String DIRECTORY){
         this.DIRECTORY = DIRECTORY;
     }
-    private static String DIRECTORY = "./ED1_Demo/documents/";//absolute path to input
+    private static String DIRECTORY;//absolute path to input
 
-    public String getDirectory(){
+    public static String getDirectory(){
         return DIRECTORY;
+    }
+    public static void setDIRECTORY(String dir){
+        DIRECTORY = dir;
+
     }
 
     //getting file counts --> convert counts to hashmaps "name / count" easier to access and less commands.
@@ -46,6 +50,8 @@ public class FileTypeDetection {
 
 
     public static void main(String[] args) throws IOException {
+
+        setDIRECTORY(args[0]);
 
         System.out.println("\n\t Traversing files in directory: " + DIRECTORY + "\n");
 
