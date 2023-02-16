@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class FileObjectCreation {
 
-    private final String DIRECTORY = "./ED1_Demo/documents/";
+    private static String DIRECTORY ;
     private ArrayList<DocxFile> listOfDocxObjects = new ArrayList<>();
     private ArrayList<DocxFile> listOfPptxObjects = new ArrayList<>();
     private ArrayList<PdfFile> listOfPdfObjects = new ArrayList<>();
@@ -22,7 +22,8 @@ public class FileObjectCreation {
             addDocxObject(new DocxFile(file,this.DIRECTORY));
         }
     }
-    public void createPdfObjects(ArrayList<String> pdf) throws IOException {
+    public void createPdfObjects(ArrayList<String> pdf, String dir) throws IOException {
+        DIRECTORY = dir;
         for(String file:pdf) {
             addPdfObject(new PdfFile(file, this.DIRECTORY));
         }
@@ -30,8 +31,7 @@ public class FileObjectCreation {
 
 
 
-    public static void main(String[] args){
-
+    public static void main(String dir){
 
     }
 

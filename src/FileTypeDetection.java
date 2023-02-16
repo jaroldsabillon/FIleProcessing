@@ -131,7 +131,7 @@ public class FileTypeDetection {
             System.out.println("File not found: " + e);
         }
 
-        driver.main(pdfNames);
+        driver.main(pdfNames, getDirectory());
 
 
 
