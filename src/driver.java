@@ -18,13 +18,14 @@ public class driver {
 
         for(PdfFile pdf: createobj.getListOfPdfObjects()){
 
+
             System.out.println("name of file: " + pdf.getFileName()+"\n");
             System.out.println("name of author: " + pdf.getAuthor()+"\n");
             System.out.println("page count: " + pdf.getPageCount()+"\n");
             System.out.println("file size: " + pdf.getFileSize()+"\n");
             System.out.println("word count: " + pdf.getWordCount()+"\n");
             System.out.println("date created: " + pdf.getDateOfCreation()+"\n\n-------------------");
-
+            pdf.createJSON();
         }
 
     }

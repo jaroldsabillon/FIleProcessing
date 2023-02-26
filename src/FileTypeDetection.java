@@ -7,9 +7,11 @@ import java.util.*;
 
 public class FileTypeDetection {
     public FileTypeDetection(String DIRECTORY){
-        this.DIRECTORY = DIRECTORY;
+        if(DIRECTORY == null){
+            this.DIRECTORY = DIRECTORY;
+        }
     }
-    private static String DIRECTORY;//absolute path to input
+    private static String DIRECTORY = "./src/FileInput/";//absolute path to input
 
     public static String getDirectory(){
         return DIRECTORY;
@@ -51,7 +53,7 @@ public class FileTypeDetection {
 
     public static void main(String[] args) throws IOException {
 
-        setDIRECTORY(args[0]);
+
 
         System.out.println("\n\t Traversing files in directory: " + DIRECTORY + "\n");
 

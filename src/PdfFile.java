@@ -1,9 +1,14 @@
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
+import com.google.gson.Gson;
+
+
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -37,6 +42,7 @@ public class PdfFile {
 
 
     private int wordCount;
+    private String allData;
     private GregorianCalendar lastModificationDate;
     private String creator;
     private String subject;
@@ -110,9 +116,25 @@ public class PdfFile {
         return this.linksInFile.get(link);
     }
 
-    public void OutPutJson(){
+    public void createJSON(){
+        this.allData = "{'name': '" + getFileName() + "', 'author': '"+getAuthor()+"', 'pcount': "+getPageCount()+
+                ", 'filesize': "+getFileSize()+", 'wcount': "+getWordCount()+", 'created': '"+getDateOfCreation()+"'}";
 
+        Gson gson = new Gson();
+
+        // Convert the input string to a JSON object
+        Object jsonObject = gson.fromJson(this.allData, Object.class);
+        String outputFilePath = "./src/FileOutput/";
+
+        // Write the JSON object to a file
+        try (FileWriter fileWriter = new FileWriter(outputFilePath+getFileName()+".json")) {
+            gson.toJson(jsonObject, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
 
 
