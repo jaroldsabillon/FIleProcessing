@@ -53,7 +53,10 @@ public class FileTypeDetection {
 
     public static void main(String[] args) throws IOException {
 
-
+        if(args[0]!=null){
+            System.out.println("Detected directory to set from args: "+ args[0]);
+            setDIRECTORY(args[0]);
+        }
 
         System.out.println("\n\t Traversing files in directory: " + DIRECTORY + "\n");
 
