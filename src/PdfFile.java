@@ -117,8 +117,8 @@ public class PdfFile {
     }
 
     public void createJSON(){
-        this.allData = "{'name': '" + getFileName() + "', 'author': '"+getAuthor()+"', 'pcount': "+getPageCount()+
-                ", 'filesize': "+getFileSize()+", 'wcount': "+getWordCount()+", 'created': '"+getDateOfCreation()+"'}";
+        this.allData = "{'name': '" + getFileName() + "',\n 'author': '"+getAuthor()+"',\n 'pagecount': "+getPageCount()+
+                ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+"'}";
 
         Gson gson = new Gson();
 

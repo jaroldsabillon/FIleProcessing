@@ -136,6 +136,7 @@ public class FileTypeDetection {
             System.out.println("File not found: " + e);
         }
 
+        //runs driver program. Driver contains Object creation for each file and then
         driver.main(pdfNames, getDirectory());
 
 
