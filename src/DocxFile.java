@@ -1,3 +1,4 @@
+import com.google.gson.Gson;
 import org.apache.poi.extractor.POITextExtractor;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.ooxml.POIXMLDocument;
@@ -10,31 +11,31 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFHyperlink;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
 public class DocxFile {
-
-
-
+    File file;
     public DocxFile(String name, String Directory) throws IOException, InvalidFormatException {
         this.fileName = name;
         this.Directory = Directory;
+        this.file = new File(Directory+name);
 
         this.setWordCount();
         this.setPageCount();
+        this.setAuthor();
 
     }
 
     private String Directory;
+    private String allData;
     private int wordCount;
     private int pageCount;
     private String author;
-    private int fileSize;
+    private long fileSize;
     private Date dateOfCreation;
     private String fileName;
     //Stores each links response code
@@ -69,16 +70,18 @@ public class DocxFile {
     public int getPageCount(){
         return this.pageCount;
     }
-    public void setAuthor(String name){
-        this.author = name;
+    public void setAuthor() throws IOException {
+        XWPFDocument doc = new XWPFDocument(new FileInputStream(Directory+fileName));
+        String author = doc.getProperties().getCoreProperties().getCreator();
+        this.author = author;
     }
     public String getAuthor(){
         return this.author;
     }
-    public void setFileSize(int size){
-        this.fileSize = size;
+    public void setFileSize(){
+        this.fileSize = this.file.length();
     }
-    public int getFileSize(){
+    public long getFileSize(){
         return this.fileSize;
     }
     public void setDateOfCreation(Date date){
@@ -113,7 +116,23 @@ public class DocxFile {
         return this.linksInFile.get(link);
     }
 
-    public void OutPutJson(){
+    public void createJSON(){
+        this.allData = "{'name': '" + getFileName() + "',\n 'author': '"+getAuthor()+"',\n 'pagecount': "+getPageCount()+
+                ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+"'}";
+
+        Gson gson = new Gson();
+
+        // Convert the input string to a JSON object
+        Object jsonObject = gson.fromJson(this.allData, Object.class);
+        String outputFilePath = "./src/FileOutput/";
+
+        // Write the JSON object to a file
+        try (FileWriter fileWriter = new FileWriter(outputFilePath+getFileName()+".json")) {
+            gson.toJson(jsonObject, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
