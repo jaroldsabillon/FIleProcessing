@@ -1,4 +1,6 @@
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.File;
@@ -51,7 +53,7 @@ public class FileTypeDetection {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InvalidFormatException {
 
         if(args.length != 0){
             System.out.println("Detected directory to set from args: "+ args[0]);
@@ -137,7 +139,7 @@ public class FileTypeDetection {
         }
 
         //runs driver program. Driver contains Object creation for each file and then
-        driver.main(pdfNames, getDirectory());
+        driver.main(pdfNames, docxNames, getDirectory());
 
 
 

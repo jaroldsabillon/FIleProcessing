@@ -26,6 +26,7 @@ public class PdfFile {
         this.file = new File(directory+fileName);
         this.doc = PDDocument.load(file);
         PDDocumentInformation pdd = this.doc.getDocumentInformation();
+
         this.fileName = fileName;
         this.creationDate = (GregorianCalendar) pdd.getCreationDate();
         this.author = pdd.getAuthor();

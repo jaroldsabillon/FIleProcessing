@@ -1,3 +1,19 @@
+import org.apache.poi.extractor.POITextExtractor;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.ooxml.POIXMLDocument;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFHyperlink;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -5,9 +21,13 @@ public class DocxFile {
 
 
 
-    public DocxFile(String name, String Directory){
+    public DocxFile(String name, String Directory) throws IOException, InvalidFormatException {
         this.fileName = name;
         this.Directory = Directory;
+
+        this.setWordCount();
+        this.setPageCount();
+
     }
 
     private String Directory;
@@ -27,14 +47,24 @@ public class DocxFile {
         put("grammar", "null");
     }};
 
-    public void setWordCount(Integer count){
-        this.wordCount = count;
+    public void setWordCount() throws IOException {
+        XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(new FileInputStream(Directory+fileName)));
+        String allText = extractor.getText();
+        String[] words = allText.split("\\s+");
+        int wordCount = words.length;
+        //int wordCount = allText.length();
+        extractor.close();
+        this.wordCount = wordCount;
+
     }
     public Integer getWordCount(){
         return this.wordCount;
     }
-    public void setPageCount(int count){
-        this.pageCount = count;
+    public void setPageCount() throws IOException {
+        XWPFDocument document = new XWPFDocument(new FileInputStream(Directory+fileName));
+        int pageCount = document.getProperties().getExtendedProperties().getPages();
+        document.close();
+        this.pageCount = pageCount;
     }
     public int getPageCount(){
         return this.pageCount;

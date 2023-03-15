@@ -1,3 +1,5 @@
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,7 +19,9 @@ public class FileObjectCreation {
         this.listOfDocxObjects.add(file);
     }
     public void addPdfObject(PdfFile file){ this.listOfPdfObjects.add(file);};
-    public void createDocxObjects(ArrayList<String> docx){
+
+    public void createDocxObjects(ArrayList<String> docx, String dir) throws IOException, InvalidFormatException {
+        DIRECTORY = dir;
         for(String file: docx){
             addDocxObject(new DocxFile(file,this.DIRECTORY));
         }
