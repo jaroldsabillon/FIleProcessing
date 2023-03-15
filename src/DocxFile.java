@@ -19,14 +19,18 @@ import java.util.HashMap;
 
 public class DocxFile {
     File file;
+    XWPFDocument document;
     public DocxFile(String name, String Directory) throws IOException, InvalidFormatException {
         this.fileName = name;
         this.Directory = Directory;
         this.file = new File(Directory+name);
-
+        this.document = new XWPFDocument(new FileInputStream(Directory+name));
         this.setWordCount();
         this.setPageCount();
         this.setAuthor();
+        this.setDateOfCreation();
+        this.setFileSize();
+
 
     }
 
@@ -49,12 +53,11 @@ public class DocxFile {
     }};
 
     public void setWordCount() throws IOException {
-        XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(new FileInputStream(Directory+fileName)));
+        XWPFWordExtractor extractor = new XWPFWordExtractor(this.document);
         String allText = extractor.getText();
         String[] words = allText.split("\\s+");
         int wordCount = words.length;
         //int wordCount = allText.length();
-        extractor.close();
         this.wordCount = wordCount;
 
     }
@@ -62,29 +65,39 @@ public class DocxFile {
         return this.wordCount;
     }
     public void setPageCount() throws IOException {
-        XWPFDocument document = new XWPFDocument(new FileInputStream(Directory+fileName));
-        int pageCount = document.getProperties().getExtendedProperties().getPages();
-        document.close();
+        int pageCount = this.document.getProperties().getExtendedProperties().getPages();
+
         this.pageCount = pageCount;
     }
     public int getPageCount(){
         return this.pageCount;
     }
     public void setAuthor() throws IOException {
-        XWPFDocument doc = new XWPFDocument(new FileInputStream(Directory+fileName));
-        String author = doc.getProperties().getCoreProperties().getCreator();
+        String author = this.document.getProperties().getCoreProperties().getCreator();
         this.author = author;
     }
     public String getAuthor(){
         return this.author;
     }
     public void setFileSize(){
-        this.fileSize = this.file.length();
+        File file = new File(Directory+fileName);
+
+        // Get the size of the file in bytes
+        long fileSizeInBytes = file.length();
+
+        // Print the size of the file
+        this.fileSize = fileSizeInBytes;
     }
     public long getFileSize(){
         return this.fileSize;
     }
-    public void setDateOfCreation(Date date){
+    public void setDateOfCreation() throws IOException {
+
+        // Get the creation date of the document from its properties
+        Date creationDate = this.document.getProperties().getCoreProperties().getCreated();
+        Date date = creationDate;
+
+        // Close the document
         this.dateOfCreation = date;
     }
     public Date getDateOfCreation(){

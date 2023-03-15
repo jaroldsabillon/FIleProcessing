@@ -21,6 +21,8 @@ public class driver {
             System.out.println("Word count: "+docs.getWordCount()+"\n");
             System.out.println("file size: " + docs.getFileSize()+"\n");
             System.out.println("Page count: "+docs.getPageCount()+"\n");
+            System.out.println("Page count: "+docs.getDateOfCreation()+"\n");
+
             System.out.println("\n\n-------------------");
             docs.createJSON();
         }
