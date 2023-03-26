@@ -30,8 +30,6 @@ public class DocxFile {
         this.setAuthor();
         this.setDateOfCreation();
         this.setFileSize();
-
-
     }
 
     private String Directory;

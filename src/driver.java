@@ -6,14 +6,21 @@ import java.util.ArrayList;
 public class driver {
 
     //change to accept an array of arrays and create a for loop to enter each to make it.
-    public static void main(ArrayList<String> pdfArray, ArrayList<String> docxArray, ArrayList<String> pptxArray, String dir) throws IOException, InvalidFormatException {
+    public static void main(String[] args) throws IOException, InvalidFormatException {
 
         System.out.print("Running second program\n");
+
+        FileTypeDetection FilesForClassOne = new FileTypeDetection("./src/FileInput/");
+
+        FilesForClassOne.setFileNames();
+        String dir1 = FilesForClassOne.getDirectory();
         FileObjectCreation createobj = new FileObjectCreation();
 
-        createobj.createDocxObjects(docxArray, dir);
-        createobj.createPdfObjects(pdfArray, dir);
-        createobj.createPptxObjects(pptxArray,dir);
+
+        createobj.createDocxObjects(FilesForClassOne.getDOCXNames(), dir1);
+        createobj.createPdfObjects(FilesForClassOne.getPDFNames(), dir1);
+        createobj.createPptxObjects(FilesForClassOne.getPPTXNames(),dir1);
+
         System.out.println("\n\n-------------\n\nword documents\n\n-------------");
         for(DocxFile docs: createobj.getListOfDocxObjects()){
             System.out.println("name of file: "+docs.getFileName()+"\n");
