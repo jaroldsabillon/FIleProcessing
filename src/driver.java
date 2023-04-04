@@ -1,4 +1,3 @@
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +5,7 @@ import java.util.ArrayList;
 public class driver {
 
     //change to accept an array of arrays and create a for loop to enter each to make it.
-    public static void main(String[] args) throws IOException, InvalidFormatException {
+    public static void main(String[] args) throws IOException {
 
         System.out.print("Running second program\n");
 

@@ -1,4 +1,3 @@
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,13 +21,13 @@ public class FileObjectCreation {
     public void addPdfObject(PdfFile file){ this.listOfPdfObjects.add(file);};
     public void addPptxObject(PptxFile file){ this.listOfPptxObjects.add(file);};
 
-    public void createDocxObjects(ArrayList<String> docx, String dir) throws IOException, InvalidFormatException {
+    public void createDocxObjects(ArrayList<String> docx, String dir) throws IOException{
         DIRECTORY = dir;
         for(String file: docx){
             addDocxObject(new DocxFile(file,this.DIRECTORY));
         }
     }
-    public void createPptxObjects(ArrayList<String> pptx, String dir) throws IOException, InvalidFormatException {
+    public void createPptxObjects(ArrayList<String> pptx, String dir) throws IOException {
         DIRECTORY = dir;
         for(String file: pptx){
             addPptxObject(new PptxFile(file,this.DIRECTORY));
