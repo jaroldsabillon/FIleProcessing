@@ -1,12 +1,11 @@
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-
-import java.io.FileFilter;
-import java.io.IOException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * Takes a directory in its constructor
+ * checks file types in the directory and sorts them into appropriate arrays
+ */
 public class FileTypeDetection {
     public FileTypeDetection(String DIRECTORY){
         if(DIRECTORY == null){
@@ -39,6 +38,7 @@ public class FileTypeDetection {
     private ArrayList<String> pptxNames = new ArrayList<>();
     private ArrayList<String> docxNames= new ArrayList<>();
     private ArrayList<String> pdfNames = new ArrayList<>();
+    private ArrayList<String> excelNames = new ArrayList<>();
 
     //if data structure for a specific file type is not created and added to the file organization then it will be added here
     private ArrayList<String> unknownNames = new ArrayList<>();
@@ -70,6 +70,13 @@ public class FileTypeDetection {
     public ArrayList<String> getPPTXNames(){
         return this.pptxNames;
     }
+    public ArrayList<String> getEXCELNames(){
+        return this.excelNames;
+    }
+
+    /**
+     * Opens a directory and begins adding file names into an appropriate arraylist of the document type
+     */
     public void setFileNames() {
 
         try {
@@ -100,6 +107,8 @@ public class FileTypeDetection {
                         pptxNames.add(f.getName());
                     } else if (extension.equals("pdf")) {
                         pdfNames.add(f.getName());
+                    }else if (extension.equals("xlsx")) {
+                        excelNames.add(f.getName());
                     } else {
                         unknownNames.add(f.getName());
                     }
@@ -110,6 +119,9 @@ public class FileTypeDetection {
         }
     }
 
+    /**
+     * Prints the data retrieved from a document and placed into an object to the console
+     */
     public void printFileNames(){
         System.out.println(
                 "---------------------------------------------\n" +
@@ -137,12 +149,22 @@ public class FileTypeDetection {
         }
         System.out.println(
                 "---------------------------------------------\n" +
+                        "\t\tfiles in excel\n" +
+                        "---------------------------------------------");
+
+        for (String s : this.excelNames) {
+            System.out.println("|\t"+ s + "\t\t\t|\n");
+        }
+
+        System.out.println(
+                "---------------------------------------------\n" +
                         "\t\tOther files\n" +
                         "---------------------------------------------");
 
         for (String s : this.unknownNames) {
             System.out.println("|\t"+ s + "\t\t\t|\n");
         }
+
     }
 
 

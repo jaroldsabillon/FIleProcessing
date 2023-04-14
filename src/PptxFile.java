@@ -2,6 +2,7 @@
 import java.io.*;
 
 import com.google.gson.Gson;
+import org.apache.poi.EmptyFileException;
 import org.apache.poi.ooxml.POIXMLProperties;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.*;
@@ -13,9 +14,12 @@ public class PptxFile {
         this.file = new File(directory + nameOfFile);
         this.Directory = directory;
         this.fileName = nameOfFile;
-
-        this.pptx = new XMLSlideShow(new FileInputStream(Directory + fileName));
-
+        try {
+            this.pptx = new XMLSlideShow(new FileInputStream(Directory + fileName));
+        }catch(EmptyFileException e){
+            System.out.println("Empty file: " + nameOfFile);
+            return;
+        }
         //sets the value of fileName to the parameter nameOfFile
 
 

@@ -1,30 +1,35 @@
 import com.google.gson.Gson;
-import org.apache.poi.extractor.POITextExtractor;
-import org.apache.poi.hwpf.extractor.WordExtractor;
-import org.apache.poi.ooxml.POIXMLDocument;
-import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.EmptyFileException;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFHyperlink;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
 public class DocxFile {
     File file;
     XWPFDocument document;
-    public DocxFile(String name, String Directory) throws IOException, InvalidFormatException {
+
+    /**
+     * Constructor
+     * @param name name of the file
+     * @param Directory directory of the file
+     * @throws IOException throws exception if file is not found
+     * @throws InvalidFormatException throws invalidformatexception if the file is not of the correct type
+     */
+    public DocxFile(String name, String Directory) throws IOException {
         this.fileName = name;
         this.Directory = Directory;
         this.file = new File(Directory+name);
-        this.document = new XWPFDocument(new FileInputStream(Directory+name));
+        try {
+            this.document = new XWPFDocument(new FileInputStream(Directory + name));
+        }catch(EmptyFileException e){
+            System.out.println("emptyfile " + name);
+            return;
+        }
+
         this.setWordCount();
         this.setPageCount();
         this.setAuthor();
@@ -50,7 +55,12 @@ public class DocxFile {
         put("grammar", "null");
     }};
 
-    public void setWordCount() throws IOException {
+    /**
+     * Sets word count for the word document by parsing text
+     * @throws IOException throws IOexception if file is not found
+     */
+    public void setWordCount() throws IOException, EmptyFileException {
+
         XWPFWordExtractor extractor = new XWPFWordExtractor(this.document);
         String allText = extractor.getText();
         String[] words = allText.split("\\s+");
@@ -59,6 +69,7 @@ public class DocxFile {
         this.wordCount = wordCount;
 
     }
+
     public Integer getWordCount(){
         return this.wordCount;
     }
