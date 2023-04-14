@@ -8,11 +8,9 @@ import java.util.*;
  */
 public class FileTypeDetection {
     public FileTypeDetection(String DIRECTORY){
-        if(DIRECTORY == null){
-            this.DIRECTORY = DIRECTORY;
-        }
+        this.DIRECTORY = DIRECTORY;
     }
-    private String DIRECTORY = "./src/FileInput/";//absolute path to input
+    private String DIRECTORY;//absolute path to input
 
     public String getDirectory(){
         return this.DIRECTORY;

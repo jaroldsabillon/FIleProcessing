@@ -14,20 +14,19 @@ public class Driver {
 
 
         System.out.print("Running second program\n");
-
-        FileTypeDetection FilesForClassOne = new FileTypeDetection("./src/FileInput/");
+        System.out.println(System.getProperty("user.dir")+"/FileProcessing/src/FileInput");
+        FileTypeDetection FilesForClassOne = new FileTypeDetection("./FileProcessing/src/FileInput/");
 
         FilesForClassOne.setFileNames();
         FilesForClassOne.printFileNames();
-        String dir1 = FilesForClassOne.getDirectory();
-        FileObjectCreation createobj = new FileObjectCreation();
 
+        String dir1 = "./FileProcessing/src/FileInput/";
+        FileObjectCreation createobj = new FileObjectCreation();
 
         createobj.createDocxObjects(FilesForClassOne.getDOCXNames(), dir1);
         createobj.createPdfObjects(FilesForClassOne.getPDFNames(), dir1);
         createobj.createPptxObjects(FilesForClassOne.getPPTXNames(),dir1);
         createobj.createExcelObjects(FilesForClassOne.getEXCELNames(), dir1);
-
 
 
         //Everything past this line simply prints file information onto console
@@ -41,7 +40,6 @@ public class Driver {
             System.out.println("Page count: "+docs.getDateOfCreation()+"\n");
 
             System.out.println("\n\n-------------------");
-            docs.createJSON();
         }
         System.out.println("\n\nPrinting pdf file data \n\n-----------------");
         for(PdfFile pdf: createobj.getListOfPdfObjects()){
@@ -56,7 +54,6 @@ public class Driver {
                     "/"+pdf.getFileYear()+" " +pdf.getFileHour()+":"+pdf.getFileMinute()+":"
                     +pdf.getFileSecond()+"\n");
             System.out.println("\n\n-------------------");
-            pdf.createJSON();
         }
         System.out.println("\n\nPowerpoint files \n\n---------------");
         for(PptxFile pptx: createobj.getListOfPptxObjects()){
@@ -67,7 +64,6 @@ public class Driver {
             System.out.println("Page count: "+ pptx.getNumberOfSlides()+"\n");
             System.out.println("date created: " + pptx.getCreationDate());
             System.out.println("\n\n-------------------");
-            pptx.createJSON();
         }
         System.out.println("\n\nExcel files \n\n---------------");
         for(ExcelFile excel: createobj.getListOfExcelObjects()){
@@ -78,7 +74,7 @@ public class Driver {
             System.out.println("Row count: " + excel.getRowCount()+"\n");
             System.out.println("date created: " + excel.getCreationTime());
             System.out.println("\n\n-------------------");
-            //excel.createJSON();
+
         }
 
     }

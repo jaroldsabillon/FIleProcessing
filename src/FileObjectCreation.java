@@ -47,25 +47,25 @@ public class FileObjectCreation {
     //Creates objects from a list of file names
     public void createDocxObjects(ArrayList<String> docx, String dir) throws IOException, InvalidFormatException {
 
-        DIRECTORY = dir;
+        this.DIRECTORY = dir;
         for(String file: docx){
             addDocxObject(new DocxFile(file,this.DIRECTORY));
         }
     }
     public void createPptxObjects(ArrayList<String> pptx, String dir) throws IOException, InvalidFormatException {
-        DIRECTORY = dir;
+        this.DIRECTORY = dir;
         for(String file: pptx){
             addPptxObject(new PptxFile(file,this.DIRECTORY));
         }
     }
     public void createPdfObjects(ArrayList<String> pdf, String dir) throws IOException {
-        DIRECTORY = dir;
+        this.DIRECTORY = dir;
         for(String file:pdf) {
             addPdfObject(new PdfFile(file, this.DIRECTORY));
         }
     }
     public void createExcelObjects(ArrayList<String> excel, String dir) throws IOException {
-        DIRECTORY = dir;
+        this.DIRECTORY = dir;
         for(String file:excel) {
             addExcelObject(new ExcelFile(file, this.DIRECTORY));
         }

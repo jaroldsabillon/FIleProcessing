@@ -1,13 +1,12 @@
+import com.google.gson.Gson;
+import org.apache.poi.EmptyFileException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.openxml4j.opc.PackageProperties;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -17,14 +16,31 @@ public class ExcelFile {
 
     private String name;
     private String Directory;
+    private String allData;
 
-
-    public ExcelFile(String name, String dir) throws IOException {
+    /**
+     * Constructor
+     * @param name name of the file
+     * @param dir directory of the file
+     * @throws IOException throws exception if file is not found
+     * @throws InvalidFormatException throws invalidformatexception if the file is not of the correct type
+     */
+    public ExcelFile(String name, String dir) throws IOException{
         this.name = name;
         this.Directory = dir;
+
         FileInputStream fis = new FileInputStream(new File(dir+name));
-        Workbook workbook = WorkbookFactory.create(fis);
-        getFileInformation(dir, workbook);
+        System.out.println(dir+name);
+        try{
+
+            Workbook workbook = WorkbookFactory.create(fis);
+            getFileInformation(dir, workbook);
+
+        }catch(EmptyFileException e){
+            System.out.println("File not applicable");
+            return;
+        }
+        this.createJSON();
     }
 
 
@@ -119,5 +135,23 @@ public class ExcelFile {
         public void setCreationTime(String creationTime) {
             this.creationTime = creationTime;
         }
+    public void createJSON() {
+        this.allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'pagecount': " + getRowCount() +
+                ",\n 'filesize': " + getFileSize() + ",\n 'wordcount': " + getWordCount() + ",\n 'created': '" + getCreationTime() + "'}";
 
+        Gson gson = new Gson();
+
+        // Convert the input string to a JSON object
+        Object jsonObject = gson.fromJson(this.allData, Object.class);
+
+        //change this directory to
+        String outputFilePath = "./FileProcessing/src/FileOutput/";
+
+        // Write the JSON object to a file
+        try (FileWriter fileWriter = new FileWriter(outputFilePath + getFileName() + ".json")) {
+            gson.toJson(jsonObject, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

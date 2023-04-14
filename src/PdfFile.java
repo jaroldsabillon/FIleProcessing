@@ -49,7 +49,7 @@ public class PdfFile {
                 "/"+getFileYear()+" " +getFileHour()+":"+getFileMinute()+":"
                 +getFileSecond();
         doc.close();
-
+        createJSON();
     }
 
     private int fileMonth;
@@ -154,7 +154,7 @@ public class PdfFile {
 
         // Convert the input string to a JSON object
         Object jsonObject = gson.fromJson(this.allData, Object.class);
-        String outputFilePath = "./src/FileOutput/";
+        String outputFilePath = "./FileProcessing/src/FileOutput/";
 
         // Write the JSON object to a file
         try (FileWriter fileWriter = new FileWriter(outputFilePath+getFileName()+".json")) {

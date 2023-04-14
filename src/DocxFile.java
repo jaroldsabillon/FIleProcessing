@@ -23,6 +23,7 @@ public class DocxFile {
         this.fileName = name;
         this.Directory = Directory;
         this.file = new File(Directory+name);
+        System.out.println("Creating file: " + name);
         try {
             this.document = new XWPFDocument(new FileInputStream(Directory + name));
         }catch(EmptyFileException e){
@@ -35,6 +36,7 @@ public class DocxFile {
         this.setAuthor();
         this.setDateOfCreation();
         this.setFileSize();
+        this.createJSON();
     }
 
     private String Directory;
@@ -138,6 +140,10 @@ public class DocxFile {
         return this.linksInFile.get(link);
     }
 
+    /**
+     * Creates a JSON file with the data extracted
+     * Change directory variables as needed
+     */
     public void createJSON(){
         this.allData = "{'name': '" + getFileName() + "',\n 'author': '"+getAuthor()+"',\n 'pagecount': "+getPageCount()+
                 ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+"'}";
@@ -146,7 +152,9 @@ public class DocxFile {
 
         // Convert the input string to a JSON object
         Object jsonObject = gson.fromJson(this.allData, Object.class);
-        String outputFilePath = "./src/FileOutput/";
+
+        //change this directory to
+        String outputFilePath = "./FileProcessing/src/FileOutput/";
 
         // Write the JSON object to a file
         try (FileWriter fileWriter = new FileWriter(outputFilePath+getFileName()+".json")) {

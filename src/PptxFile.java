@@ -38,6 +38,7 @@ public class PptxFile {
         //calls the setWordCount method which returns the word count
         //Issue, this method also counts words in images...
         setWordCount();
+        createJSON();
 
     }
 
@@ -129,7 +130,7 @@ public class PptxFile {
 
         // Convert the input string to a JSON object
         Object jsonObject = gson.fromJson(this.allData, Object.class);
-        String outputFilePath = "./src/FileOutput/";
+        String outputFilePath = "./FileProcessing/src/FileOutput/";
 
         // Write the JSON object to a file
         try (FileWriter fileWriter = new FileWriter(outputFilePath + getFileName() + ".json")) {
