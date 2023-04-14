@@ -1,6 +1,7 @@
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Run this file to begin processing files within a directory
@@ -9,13 +10,19 @@ public class Driver {
 
     //change to accept an array of arrays and create a for loop to enter each to make it.
     public static void main(String[] args) throws IOException, InvalidFormatException {
+        String directory = "./FileProcessing/src/FileInput/";
+        if(args.length!=0) {
 
+            for (String s : args) {
+                directory = s;
+            }
+        }
 
 
 
         System.out.print("Running second program\n");
         System.out.println(System.getProperty("user.dir")+"/FileProcessing/src/FileInput");
-        FileTypeDetection FilesForClassOne = new FileTypeDetection("./FileProcessing/src/FileInput/");
+        FileTypeDetection FilesForClassOne = new FileTypeDetection(directory);
 
         FilesForClassOne.setFileNames();
         FilesForClassOne.printFileNames();
