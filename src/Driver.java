@@ -11,11 +11,10 @@ public class Driver {
     //change to accept an array of arrays and create a for loop to enter each to make it.
     public static void main(String[] args) throws IOException, InvalidFormatException {
         String directory = "./FileProcessing/src/FileInput/";
+        String output = "./FileProcessing/src/FileOutput/";
         if(args.length!=0) {
-
-            for (String s : args) {
-                directory = s;
-            }
+            args[0] = directory;
+            args[1] = output;
         }
 
 
@@ -35,10 +34,14 @@ public class Driver {
         createobj.createPptxObjects(FilesForClassOne.getPPTXNames(),dir1);
         createobj.createExcelObjects(FilesForClassOne.getEXCELNames(), dir1);
 
+        //DataJSON datatojson  = new DataJSON();
+
 
         //Everything past this line simply prints file information onto console
         System.out.println("\n\n-------------\n\nword documents\n\n-------------");
         for(DocxFile docs: createobj.getListOfDocxObjects()){
+
+
             System.out.println("name of file: "+docs.getFileName()+"\n");
             System.out.println("name of author: "+docs.getAuthor()+"\n");
             System.out.println("Word count: "+docs.getWordCount()+"\n");

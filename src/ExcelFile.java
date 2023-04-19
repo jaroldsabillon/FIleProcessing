@@ -43,7 +43,12 @@ public class ExcelFile {
         this.createJSON();
     }
 
-
+    /**
+     * Retrieves file informationa and stores it within the object
+     * @param filePath the path of the file
+     * @param workbook a workbook object created using apache poi
+     * @throws IOException thrown is file is not found
+     */
     private void getFileInformation(String filePath, Workbook workbook) throws IOException {
         Path path = new File(filePath).toPath();
         BasicFileAttributes attrs = Files.readAttributes(path, BasicFileAttributes.class);
@@ -135,6 +140,8 @@ public class ExcelFile {
         public void setCreationTime(String creationTime) {
             this.creationTime = creationTime;
         }
+
+
     public void createJSON() {
         this.allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'pagecount': " + getRowCount() +
                 ",\n 'filesize': " + getFileSize() + ",\n 'wordcount': " + getWordCount() + ",\n 'created': '" + getCreationTime() + "'}";
