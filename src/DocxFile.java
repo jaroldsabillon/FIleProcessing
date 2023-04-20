@@ -23,9 +23,8 @@ public class DocxFile {
         this.fileName = name;
         this.Directory = Directory;
         this.file = new File(Directory+name);
-        System.out.println("Creating file: " + name);
         try {
-            this.document = new XWPFDocument(new FileInputStream(Directory + name));
+            this.document = new XWPFDocument(new FileInputStream(this.file));
         }catch(EmptyFileException e){
             System.out.println("emptyfile " + name);
             return;
@@ -36,7 +35,8 @@ public class DocxFile {
         this.setAuthor();
         this.setDateOfCreation();
         this.setFileSize();
-        this.createJSON();
+        this.setData();
+        //this.createJSON();
     }
 
     private String Directory;
@@ -139,6 +139,14 @@ public class DocxFile {
     public Integer getLinkResponseCode(String link){
         return this.linksInFile.get(link);
     }
+    public void setData(){
+        this.allData =  "{'name': '" + getFileName() + "',\n 'author': '"+getAuthor()+"',\n 'pagecount': "+getPageCount()+
+                ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+"'}";
+    }
+    public String getData(){
+        return this.allData;
+    }
+
 
     /**
      * Creates a JSON file with the data extracted

@@ -30,7 +30,6 @@ public class ExcelFile {
         this.Directory = dir;
 
         FileInputStream fis = new FileInputStream(new File(dir+name));
-        System.out.println(dir+name);
         try{
 
             Workbook workbook = WorkbookFactory.create(fis);
@@ -40,7 +39,9 @@ public class ExcelFile {
             System.out.println("File not applicable");
             return;
         }
-        this.createJSON();
+
+        this.setData();
+        //this.createJSON();
     }
 
     /**
@@ -141,11 +142,17 @@ public class ExcelFile {
             this.creationTime = creationTime;
         }
 
+        public void setData(){
+            this.allData =  "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'pagecount': " + getRowCount() +
+                    ",\n 'filesize': " + getFileSize() + ",\n 'wordcount': " + getWordCount() + ",\n 'created': '" + getCreationTime() + "'}";
+
+        }
+        public String getData(){
+            return this.allData;
+        }
+
 
     public void createJSON() {
-        this.allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'pagecount': " + getRowCount() +
-                ",\n 'filesize': " + getFileSize() + ",\n 'wordcount': " + getWordCount() + ",\n 'created': '" + getCreationTime() + "'}";
-
         Gson gson = new Gson();
 
         // Convert the input string to a JSON object

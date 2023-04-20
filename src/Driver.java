@@ -10,23 +10,22 @@ public class Driver {
 
     //change to accept an array of arrays and create a for loop to enter each to make it.
     public static void main(String[] args) throws IOException, InvalidFormatException {
-        String directory = "./FileProcessing/src/FileInput/";
-        String output = "./FileProcessing/src/FileOutput/";
+        String directory = "./src/FileInput/";
+        String output = "./src/FileOutput/";
         if(args.length!=0) {
             args[0] = directory;
             args[1] = output;
         }
 
 
-
         System.out.print("Running second program\n");
-        System.out.println(System.getProperty("user.dir")+"/FileProcessing/src/FileInput");
+        System.out.println(System.getProperty("user.dir")+"./src/FileInput");
         FileTypeDetection FilesForClassOne = new FileTypeDetection(directory);
 
         FilesForClassOne.setFileNames();
         FilesForClassOne.printFileNames();
 
-        String dir1 = "./FileProcessing/src/FileInput/";
+        String dir1 = directory;
         FileObjectCreation createobj = new FileObjectCreation();
 
         createobj.createDocxObjects(FilesForClassOne.getDOCXNames(), dir1);
@@ -35,6 +34,8 @@ public class Driver {
         createobj.createExcelObjects(FilesForClassOne.getEXCELNames(), dir1);
 
         //DataJSON datatojson  = new DataJSON();
+        DocxFile file = new DocxFile("testdoc.docx", directory);
+        DataJSON JSON = new DataJSON(output);
 
 
         //Everything past this line simply prints file information onto console
@@ -48,6 +49,7 @@ public class Driver {
             System.out.println("file size: " + docs.getFileSize()+"\n");
             System.out.println("Page count: "+docs.getPageCount()+"\n");
             System.out.println("Page count: "+docs.getDateOfCreation()+"\n");
+            JSON.toJSON(docs);
 
             System.out.println("\n\n-------------------");
         }
@@ -63,6 +65,7 @@ public class Driver {
             System.out.println("date created: " + pdf.getFileMonth()+"/"+pdf.getFileDay()+
                     "/"+pdf.getFileYear()+" " +pdf.getFileHour()+":"+pdf.getFileMinute()+":"
                     +pdf.getFileSecond()+"\n");
+            JSON.toJSON(pdf);
             System.out.println("\n\n-------------------");
         }
         System.out.println("\n\nPowerpoint files \n\n---------------");
@@ -73,6 +76,7 @@ public class Driver {
             System.out.println("file size: " + pptx.getFileSize()+"\n");
             System.out.println("Page count: "+ pptx.getNumberOfSlides()+"\n");
             System.out.println("date created: " + pptx.getCreationDate());
+            JSON.toJSON(pptx);
             System.out.println("\n\n-------------------");
         }
         System.out.println("\n\nExcel files \n\n---------------");
@@ -83,6 +87,7 @@ public class Driver {
             System.out.println("file size: " + excel.getFileSize()+"\n");
             System.out.println("Row count: " + excel.getRowCount()+"\n");
             System.out.println("date created: " + excel.getCreationTime());
+            JSON.toJSON(excel);
             System.out.println("\n\n-------------------");
 
         }

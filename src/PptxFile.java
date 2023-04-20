@@ -15,7 +15,7 @@ public class PptxFile {
         this.Directory = directory;
         this.fileName = nameOfFile;
         try {
-            this.pptx = new XMLSlideShow(new FileInputStream(Directory + fileName));
+            this.pptx = new XMLSlideShow(new FileInputStream(this.file));
         }catch(EmptyFileException e){
             System.out.println("Empty file: " + nameOfFile);
             return;
@@ -38,7 +38,8 @@ public class PptxFile {
         //calls the setWordCount method which returns the word count
         //Issue, this method also counts words in images...
         setWordCount();
-        createJSON();
+        this.setData();
+        //createJSON();
 
     }
 
@@ -122,9 +123,14 @@ public class PptxFile {
         return this.wordCount;
     }
 
-    public void createJSON() {
+    public void setData(){
         this.allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'slide count': " + getNumberOfSlides() +
                 ",\n 'filesize': " + getFileSize() + ",\n 'word count': " + getWordCount() + ",\n 'created': '" + getCreationDate() + "'}";
+    }
+    public String getData(){
+        return this.allData;
+    }
+    public void createJSON() {
 
         Gson gson = new Gson();
 

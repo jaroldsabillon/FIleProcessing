@@ -1,17 +1,77 @@
-public class DataJSON<T> {
+import com.google.gson.Gson;
 
-    public DataJSON(DocxFile file){
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class DataJSON {
+
+    private String output;
+    public DataJSON(String output){
+        this.output = output;
+    }
+
+    public void toJSON(DocxFile file){
+        Gson gson = new Gson();
+
+        // Convert the input string to a JSON object
+        Object jsonObject = gson.fromJson(file.getData(), Object.class);
+
+        //change this directory to
+        String outputFilePath = this.output;
+
+        // Write the JSON object to a file
+        try (FileWriter fileWriter = new FileWriter(outputFilePath+file.getFileName()+".json")) {
+            gson.toJson(jsonObject, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
-    public DataJSON(PptxFile file){
+    public void toJSON(PptxFile file){
+        Gson gson = new Gson();
+
+        // Convert the input string to a JSON object
+        Object jsonObject = gson.fromJson(file.getData(), Object.class);
+        String outputFilePath = this.output;
+
+        // Write the JSON object to a file
+        try (FileWriter fileWriter = new FileWriter(outputFilePath + file.getFileName() + ".json")) {
+            gson.toJson(jsonObject, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
-    public DataJSON(PdfFile file){
+    public void toJSON(PdfFile file){
+        Gson gson = new Gson();
 
+        // Convert the input string to a JSON object
+        Object jsonObject = gson.fromJson(file.getData(), Object.class);
+        String outputFilePath = this.output;
+
+        // Write the JSON object to a file
+        try (FileWriter fileWriter = new FileWriter(outputFilePath + file.getFileName() + ".json")) {
+            gson.toJson(jsonObject, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    public void toJSON(ExcelFile file){
+        Gson gson = new Gson();
 
+        // Convert the input string to a JSON object
+        Object jsonObject = gson.fromJson(file.getData(), Object.class);
 
-    public void createPDFJson(T document){
+        //change this directory to
+        String outputFilePath = this.output;
+
+        // Write the JSON object to a file
+        try (FileWriter fileWriter = new FileWriter(outputFilePath + file.getFileName() + ".json")) {
+            gson.toJson(jsonObject, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

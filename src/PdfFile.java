@@ -49,7 +49,8 @@ public class PdfFile {
                 "/"+getFileYear()+" " +getFileHour()+":"+getFileMinute()+":"
                 +getFileSecond();
         doc.close();
-        createJSON();
+        this.setData();
+        //createJSON();
     }
 
     private int fileMonth;
@@ -146,6 +147,13 @@ public class PdfFile {
         return this.linksInFile.get(link);
     }
 
+    public void setData(){
+        this.allData = "{'name': '" + getFileName() + "',\n 'author': '"+getAuthor()+"',\n 'pagecount': "+getPageCount()+
+                ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+"'}";
+    }
+    public String getData(){
+        return this.allData;
+    }
     public void createJSON(){
         this.allData = "{'name': '" + getFileName() + "',\n 'author': '"+getAuthor()+"',\n 'pagecount': "+getPageCount()+
                 ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+"'}";
